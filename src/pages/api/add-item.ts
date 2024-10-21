@@ -1,26 +1,27 @@
 import type { APIRoute } from 'astro'
-import db from '../../db/db' 
+import db from '../../db/db'
+import type { Item } from '../../models/itemModel' // Import the data model
 
 export const post: APIRoute = async ({ request }) => {
   const formData = await request.formData()
-  const name = formData.get('name') as string
-  const price = parseFloat(formData.get('price') as string)
+
+  // Create an object that matches the Item interface
+  const newItem: Item = {
+    name: formData.get('name') as string,
+    quantity: parseInt(formData.get('quantity') as string) || 1, // Default to 1 if quantity not provided
+    price: formData.has('price')
+      ? parseFloat(formData.get('price') as string)
+      : undefined, // Optional price
+  }
 
   // Insert item into the database
-  const [newItemId] = await db('items').insert({
-    name,
-    price,
-    quantity: 1,
-  })
+  const [newItemId] = await db('items').insert(newItem)
 
-  // Return a proper Response object with JSON body
-  return new Response(
-    JSON.stringify({ id: newItemId, name, price, quantity: 1 }),
-    {
-      status: 201, // HTTP status code for "Created"
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }
-  )
+  // Return the new item as a response
+  return new Response(JSON.stringify({ id: newItemId, ...newItem }), {
+    status: 201,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
 }

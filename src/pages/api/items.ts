@@ -1,12 +1,14 @@
+import type { APIRoute } from 'astro'
 import db from '../../db/db'
+import type { Item } from '../../models/itemModel'
 
-export const get = async () => {
-  // Fetch all items from the 'items' table
-  const items = await db('items').select('*')
+export const get: APIRoute = async () => {
+  const items: Item[] = await db('items').select('*')
 
-  // Return the items in JSON format
-  return {
-    body: JSON.stringify(items),
+  return new Response(JSON.stringify(items), {
     status: 200,
-  }
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
 }
