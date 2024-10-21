@@ -3,6 +3,7 @@ import { get } from '../items'
 import db from '../../../db/db'
 
 describe('GET /api/items', () => {
+
   it('should return all items from the database', async () => {
 
 
@@ -16,7 +17,7 @@ describe('GET /api/items', () => {
     const response = await get(mockContext as any)
 
     const result = await response.json()
-    console.log('Result:', result)
+    
 
     expect(result).toEqual(
       expect.arrayContaining([
