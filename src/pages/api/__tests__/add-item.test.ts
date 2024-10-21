@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { post } from '../add-item'
 
 import db from '../../../db/db'
@@ -14,7 +14,7 @@ describe('POST /api/add-item', () => {
         },
         has: (key: string) => {
           return key === 'price'
-        }
+        },
       }
     })
 

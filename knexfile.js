@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   development: {
     client: 'sqlite3',
     connection: {
@@ -7,6 +7,9 @@ module.exports = {
     useNullAsDefault: true,
     migrations: {
       directory: './src/db/migrations',
+    },
+    seeds: {
+      directory: './src/db/seeds',
     },
   },
 }
