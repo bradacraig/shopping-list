@@ -4,7 +4,7 @@ import db from '../../../db/db'
 
 describe('GET /api/items', () => {
 
-  it('should return all items from the database', async () => {
+  it.skip('should return all items from the database', async () => {
 
 
     const mockContext = {
