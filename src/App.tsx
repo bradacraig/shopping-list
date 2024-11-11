@@ -1,6 +1,4 @@
 
-import './App.css'
-import Auth from './auth/Auth'
 import { UserProvider } from './auth/UserContext'
 import ShoppingList from './ShoppingList'
 
@@ -9,9 +7,9 @@ function App() {
 
   return (
     <UserProvider>
-      <div>
-        <h1>Shopping List</h1>
-        <Auth />
+      <div className='container min-h-screen bg-blue-100 flex flex-col items-center justify-center outline-dashed'>
+        <h1 className='text-2xl font-bold mb-4'>Shopping List</h1>
+        
         <ShoppingList />
       </div>
     </UserProvider>
