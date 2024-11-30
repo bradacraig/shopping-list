@@ -95,7 +95,7 @@ const ShoppingList = () => {
             value={itemName}
             onChange={(e) => setItemName(e.target.value)}
             placeholder="Item name"
-            className="border border-gray-300 rounded px-2 py-1"
+            className="border border-gray-300 rounded px-2 py-2 h-10"
           />
         </div>
         {/* QUANTITY */}
@@ -121,7 +121,7 @@ const ShoppingList = () => {
             id="department"
             value={department}
             onChange={(e) => setDepartment(e.target.value)}
-            className="border border-gray-300 rounded px-2 py-1"
+            className="border border-gray-300 rounded px-2 py-2 h-10"
           >
             {departments.map((dept) => (
               <option key={dept} value={dept}>
