@@ -1,11 +1,18 @@
 import { useEffect, useState } from 'react'
-import { addItem, deleteItem, fetchItems } from './shoppingListService'
+import {
+  addItem,
+  deleteItem,
+  deleteList,
+  fetchItems,
+  toggleItemChecked,
+} from './shoppingListService'
 
 interface ShoppingListItem {
   id: string
   name: string
   quantity: number
   department: string
+  checked: boolean
   createdAt: Date
 }
 
@@ -49,6 +56,21 @@ const ShoppingList = () => {
   const handleDeleteItem = async (id: string) => {
     await deleteItem(id)
     setItems(await fetchItems())
+  }
+
+  const handleToggleChecked = async (id: string, checked: boolean) => {
+    await toggleItemChecked(id, checked)
+    setItems(await fetchItems())
+  }
+
+  const handleDeleteList = async () => {
+    const confirm = window.confirm(
+      'Are you sure you want to delete the entire list? This action cannot be undone.'
+    )
+    if (confirm) {
+      await deleteList() // Clear the Firestore database
+      setItems([]) // Clear the UI
+    }
   }
 
   // SORT ITEMS
@@ -114,29 +136,53 @@ const ShoppingList = () => {
       </button>
 
       <ul className="w-full max-w-md mt-4">
-        {sortedItems.map((item) => (
-          <li
-            key={item.id}
-            className="flex items-center justify-between bg-white border border-gray-200"
-          >
-            <div>
-              <span className="font-medium ml-2">{item.name}</span>
-              <span className="text-gray-500 block text-sm ml-2">
-                {item.department}
-              </span>
-            </div>
-            <div className="flex items-center space-x-4">
-              <span>{item.quantity}</span>
-              <button
-                className="bg-red-400 text-white py-1 px-2 rounded"
-                onClick={() => handleDeleteItem(item.id)}
-              >
-                X
-              </button>
-            </div>
-          </li>
-        ))}
+        {sortedItems.map((item) => {
+          // console.log(item)
+          return (
+            <li
+              key={item.id}
+              className="flex items-center justify-between bg-white border border-gray-200"
+            >
+              <div className="flex items-center space-x-4">
+                {/* Checkbox for toggling checked */}
+                <input
+                  type="checkbox"
+                  checked={item.checked}
+                  onChange={() => handleToggleChecked(item.id, item.checked)}
+                  className="form-checkbox h-5 w-5 text-blue-600"
+                />
+                <div>
+                  <span
+                    className={`font-medium ${
+                      item.checked ? 'line-through text-gray-500' : ''
+                    }`}
+                  >
+                    {item.name}
+                  </span>
+                  <span className="text-gray-500 block text-sm">
+                    {item.department}
+                  </span>
+                </div>
+              </div>
+              <div className="flex items-center space-x-4">
+                <span>{item.quantity}</span>
+                <button
+                  className="bg-red-400 text-white py-1 px-2 rounded"
+                  onClick={() => handleDeleteItem(item.id)}
+                >
+                  X
+                </button>
+              </div>
+            </li>
+          )
+        })}
       </ul>
+      <button
+        className="bg-red-500 text-white py-2 px-4 rounded my-4"
+        onClick={handleDeleteList}
+      >
+        Delete List
+      </button>
     </div>
   )
 }
