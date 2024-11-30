@@ -83,7 +83,8 @@ const ShoppingList = () => {
 
   return (
     <div>
-      <div className="flex flex-row">
+      <div className="flex flex-col">
+        {/* ITEM NAME */}
         <div className="flex flex-col mb-4">
           <label htmlFor="itemName" className="mb-1">
             Name
@@ -97,7 +98,8 @@ const ShoppingList = () => {
             className="border border-gray-300 rounded px-2 py-1"
           />
         </div>
-        <div className="flex flex-col mb-4">
+        {/* QUANTITY */}
+        {/* <div className="flex flex-col mb-4">
           <label htmlFor="quantity" className="mb-1">
             Quantity
           </label>
@@ -109,7 +111,8 @@ const ShoppingList = () => {
             onChange={(e) => setQuantity(Number(e.target.value))}
             placeholder="Quantity"
           />
-        </div>
+        </div> */}
+        {/* DEPARTMENT */}
         <div className="flex flex-col">
           <label htmlFor="department" className="mb-1">
             Department
@@ -129,7 +132,7 @@ const ShoppingList = () => {
         </div>
       </div>
       <button
-        className="bg-blue-500 text-white py-2 px-4 rounded mb-4"
+        className="bg-blue-500 text-white py-2 px-4 rounded my-4"
         onClick={handleAddItem}
       >
         Add Item
@@ -165,7 +168,7 @@ const ShoppingList = () => {
                 </div>
               </div>
               <div className="flex items-center space-x-4">
-                <span>{item.quantity}</span>
+                {/* <span>{item.quantity}</span> */}
                 <button
                   className="bg-red-400 text-white py-1 px-2 rounded"
                   onClick={() => handleDeleteItem(item.id)}
