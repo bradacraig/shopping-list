@@ -5,13 +5,28 @@ interface ShoppingListItem {
   id: string
   name: string
   quantity: number
+  department: string
   createdAt: Date
 }
+
+const departments = [
+  'Produce',
+  'Deli',
+  'Meat',
+  'Chilled',
+  'Dairy',
+  'Bakery',
+  'Canned',
+  'Cooking & Baking',
+  'Frozen',
+  'Miscellaneous',
+]
 
 const ShoppingList = () => {
   const [items, setItems] = useState<ShoppingListItem[]>([])
   const [itemName, setItemName] = useState('')
   const [quantity, setQuantity] = useState(1)
+  const [department, setDepartment] = useState(departments[0])
 
   useEffect(() => {
     const loadItems = async () => {
@@ -23,10 +38,11 @@ const ShoppingList = () => {
 
   const handleAddItem = async () => {
     if (itemName) {
-      await addItem(itemName, quantity)
+      await addItem(itemName, quantity, department)
       setItems(await fetchItems())
       setItemName('')
       setQuantity(1)
+      setDepartment(departments[0])
     }
   }
 
@@ -34,6 +50,14 @@ const ShoppingList = () => {
     await deleteItem(id)
     setItems(await fetchItems())
   }
+
+  // SORT ITEMS
+
+  const sortedItems = [...items].sort((a, b) => {
+    const aIndex = departments.indexOf(a.department)
+    const bIndex = departments.indexOf(b.department)
+    return aIndex - bIndex
+  })
 
   return (
     <div>
@@ -64,6 +88,23 @@ const ShoppingList = () => {
             placeholder="Quantity"
           />
         </div>
+        <div className="flex flex-col">
+          <label htmlFor="department" className="mb-1">
+            Department
+          </label>
+          <select
+            id="department"
+            value={department}
+            onChange={(e) => setDepartment(e.target.value)}
+            className="border border-gray-300 rounded px-2 py-1"
+          >
+            {departments.map((dept) => (
+              <option key={dept} value={dept}>
+                {dept}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
       <button
         className="bg-blue-500 text-white py-2 px-4 rounded mb-4"
@@ -73,13 +114,18 @@ const ShoppingList = () => {
       </button>
 
       <ul className="w-full max-w-md mt-4">
-        {items.map((item) => (
-          <li key={item.id}
-          className='flex items-center justify-between bg-white border border-gray-200'>
+        {sortedItems.map((item) => (
+          <li
+            key={item.id}
+            className="flex items-center justify-between bg-white border border-gray-200"
+          >
             <div>
-              <span className='font-medium ml-2'>{item.name}</span>
+              <span className="font-medium ml-2">{item.name}</span>
+              <span className="text-gray-500 block text-sm ml-2">
+                {item.department}
+              </span>
             </div>
-            <div className='flex items-center space-x-4'>
+            <div className="flex items-center space-x-4">
               <span>{item.quantity}</span>
               <button
                 className="bg-red-400 text-white py-1 px-2 rounded"
