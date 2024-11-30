@@ -132,7 +132,7 @@ const ShoppingList = () => {
         </div>
       </div>
       <button
-        className="bg-blue-500 text-white py-2 px-4 rounded my-4"
+        className="bg-blue-500 text-white py-2 px-4 rounded my-4 w-full sm:w-auto"
         onClick={handleAddItem}
       >
         Add Item
@@ -182,7 +182,7 @@ const ShoppingList = () => {
       </ul>
       {items.length > 0 && (
         <button
-          className="bg-red-500 text-white py-2 px-4 rounded my-4"
+          className="bg-red-500 text-white py-2 px-4 rounded my-4 w-full sm:w-auto"
           onClick={handleDeleteList}
         >
           Delete List
