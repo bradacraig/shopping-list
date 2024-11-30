@@ -180,12 +180,14 @@ const ShoppingList = () => {
           )
         })}
       </ul>
-      <button
-        className="bg-red-500 text-white py-2 px-4 rounded my-4"
-        onClick={handleDeleteList}
-      >
-        Delete List
-      </button>
+      {items.length > 0 && (
+        <button
+          className="bg-red-500 text-white py-2 px-4 rounded my-4"
+          onClick={handleDeleteList}
+        >
+          Delete List
+        </button>
+      )}
     </div>
   )
 }
