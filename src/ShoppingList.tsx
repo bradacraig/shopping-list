@@ -132,7 +132,7 @@ const ShoppingList = () => {
         </div>
       </div>
       <button
-        className="bg-blue-500 text-white py-2 px-4 rounded my-4 w-full sm:w-auto"
+        className="bg-green-500 text-white py-2 px-4 rounded my-4 w-full sm:w-auto"
         onClick={handleAddItem}
       >
         Add Item
