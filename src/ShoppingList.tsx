@@ -82,7 +82,7 @@ const ShoppingList = () => {
   })
 
   return (
-    <div>
+    <div className="w-4/5">
       <div className="flex flex-col">
         {/* ITEM NAME */}
         <div className="flex flex-col mb-4">
@@ -152,7 +152,7 @@ const ShoppingList = () => {
                   type="checkbox"
                   checked={item.checked}
                   onChange={() => handleToggleChecked(item.id, item.checked)}
-                  className="form-checkbox h-5 w-5 text-blue-600"
+                  className="form-checkbox h-5 w-5 text-blue-600 ml-2"
                 />
                 <div>
                   <span
@@ -170,7 +170,7 @@ const ShoppingList = () => {
               <div className="flex items-center space-x-4">
                 {/* <span>{item.quantity}</span> */}
                 <button
-                  className="bg-red-400 text-white py-1 px-2 rounded"
+                  className="bg-red-400 text-white py-1 px-2 rounded mr-2"
                   onClick={() => handleDeleteItem(item.id)}
                 >
                   X
@@ -182,7 +182,7 @@ const ShoppingList = () => {
       </ul>
       {items.length > 0 && (
         <button
-          className="bg-red-500 text-white py-2 px-4 rounded my-4 w-full sm:w-auto"
+          className="bg-red-400 text-white py-2 px-4 rounded my-4 w-full sm:w-auto"
           onClick={handleDeleteList}
         >
           Delete List
