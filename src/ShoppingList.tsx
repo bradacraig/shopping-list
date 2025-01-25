@@ -6,6 +6,7 @@ import {
   fetchItems,
   toggleItemChecked,
 } from './shoppingListService'
+import { auth } from '../firebaseConfig'
 
 interface ShoppingListItem {
   id: string
@@ -14,6 +15,7 @@ interface ShoppingListItem {
   department: string
   checked: boolean
   createdAt: Date
+  userId: string
 }
 
 const departments = [
@@ -36,6 +38,7 @@ const ShoppingList = () => {
   const [department, setDepartment] = useState(departments[0])
 
   useEffect(() => {
+    console.log('Fetching items for user:', auth.currentUser) // Debug log
     const loadItems = async () => {
       const items = await fetchItems()
       setItems(items)
@@ -44,13 +47,15 @@ const ShoppingList = () => {
   }, [])
 
   const handleAddItem = async () => {
-    if (itemName) {
+    console.log('Current user:', auth.currentUser) // Debug log
+    try {
       await addItem(itemName, quantity, department)
       setItems(await fetchItems())
-      setItemName('')
       setQuantity(1)
-      setDepartment(departments[0])
+    } catch (error) {
+      console.error('Error adding item:', error)
     }
+    setItemName('')
   }
 
   const handleDeleteItem = async (id: string) => {
